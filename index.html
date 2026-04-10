@@ -1,6 +1,7 @@
 
     <!DOCTYPE html>
     <html lang="es">
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -93,27 +94,40 @@
 
             audio::-webkit-media-controls-panel { background-color: #e5e3d7; }
         </style>
+
+        <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w97o6nfe68");
+
+</script>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="365 Notas">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="icon" type="image/png" href="logo.png">
+
     </head>
+
     <body class="antialiased">
         <div id="splash-screen" class="fixed inset-0 z-[100] bg-[#f2f0e4] flex items-center justify-center transition-opacity duration-1000">
     <div class="text-center">
         <img src="logo.png" class="w-32 h-32 object-contain animate-pulse">
 
-        <audio id="ruiditoSplash" src="Splash_Sound.mp3" preload="auto"></audio>
-        <audio id="audioSplash" src="audios/intro.mp3" preload="auto" muted playsinline></audio>
-        <audio id="audioAcierto" src="acierto.mp3" preload="auto"></audio>
-        <audio id="audioError" src="error.mp3" preload="auto"></audio>
-        
-
     </div>
 </div>
     <header class="py-6 px-6 max-w-md mx-auto">
             <div class="flex flex-col items-center justify-center text-center ...">
-                <img src="logo.png" class="w-21 h-21 object-contain opacity-95" onerror="this.style.display='none'">
+                <img src="logo.png" class="w-18 h-18 object-contain opacity-95" onerror="this.style.display='none'">
                 
                 <div class="text-center">
-                    <h1 class="text-3xl font-serif font-black italic tracking-tight text-zinc-900 leading-none mt-4">365 Notas</h1>
-                    <p class="text-[11px] font-semibold text-zinc-900 uppercase tracking-tight mb-10">@SoyInciarte</p>
+                    <h1 class="text-5xl font-serif font-black italic tracking-tighter text-zinc-900 leading-none mt-0">365 Notas</h1>
+                    <p class="text-[16px] font-medium text-zinc-900 tracking-tight mb-10">@SoyInciarte</p>
                 </div>
             </div>
 
@@ -1496,8 +1510,6 @@
             seccionRegalo.dataset.tieneRegalo = "false";
         }
 
-
-
             }
 
             function verificarRespuesta(letra, boton) {
@@ -1508,7 +1520,7 @@
                 if (respuestaCorrectaGlobal.startsWith(letra)) {
                     botones.forEach(b => b.disabled = true);
                     boton.classList.add('btn-correct');
-                    mensaje.innerText = "¡Excelente oído!";
+                    mensaje.innerText = "¡Correcto!";
                     mensaje.className = "block py-4 px-6 rounded-2xl text-zinc-900 bg-white/80 font-bold text-center border-2 border-zinc-900";
                     pista.classList.add('hidden');
                     document.getElementById('audioAcierto').play();
@@ -1521,7 +1533,7 @@
 
                 } else {
                     boton.classList.add('btn-incorrect');
-                    mensaje.innerText = "Inténtalo de nuevo...";
+                    mensaje.innerText = "Casi. Lee la pista.";
                     mensaje.className = "block py-4 px-6 rounded-2xl text-zinc-900 bg-white/80 font-bold text-center border-2 border-zinc-900";
                     pista.classList.remove('hidden');
                     document.getElementById('audioError').play();
@@ -1537,29 +1549,32 @@
 
             // Función para quitar la pantalla de bienvenida después de 2.5 segundos
     window.onload = function() {
-    const sonido = document.getElementById('audioSplash');
-    if (sonido) {
-        sonido.muted = false;
-        sonido.play().catch(error => {
-            console.log("Esperando toque del usuario para sonar");
-            document.body.addEventListener('click', () => {
-                sonido.muted = false;
-                sonido.play();
-            }, { once: true });
-        });
-    }
-
-    document.getElementById('ruiditoSplash').play().catch(e => console.log("Esperando interacción"));
-
-    setTimeout(function() {
-        const splash = document.getElementById('splash-screen');
-        if(splash){
-            splash.style.opacity = '0'; 
-            setTimeout(() => splash.style.display = 'none', 1000);
+    const splash = document.getElementById('splash-screen');
+    
+    // Simplemente esperamos 2.5 segundos y quitamos el logo
+    setTimeout(() => {
+        if (splash) {
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.style.display = 'none';
+            }, 500);
         }
-    }, 3500); 
+    }, 2500);
 };
+
         </script>
+
+        ...
+    </script>
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+            class="fixed bottom-8 right-6 bg-zinc-900/80 backdrop-blur-sm text-white p-3 rounded-full shadow-2xl z-[100] transition-all hover:scale-110 active:scale-95 border border-zinc-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+        </svg>
+    </button>
+</body>
+</html>
+
     </body>
     </html>
     
