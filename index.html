@@ -1822,23 +1822,23 @@
 window.onload = function() {
     const sonido = document.getElementById('audioSplash');
 
-    // Función que ejecutará el sonido
-    const reproducirRuidito = () => {
+    const iniciarAudio = () => {
         if (sonido) {
-            sonido.play().catch(e => console.log("Audio bloqueado aún"));
-            // Una vez que suena, eliminamos los escuchadores para no repetir el ruidito
-            document.removeEventListener('click', reproducirRuidito);
-            document.removeEventListener('touchstart', reproducirRuidito);
+            // En móviles, esto 'despierta' el motor de audio
+            sonido.play().then(() => {
+                // Una vez que suena, limpiamos todos los escuchadores
+                document.removeEventListener('click', iniciarAudio);
+                document.removeEventListener('touchstart', iniciarAudio);
+            }).catch(e => console.log("Permiso pendiente..."));
         }
     };
 
-    // Escuchamos el PRIMER toque del usuario en cualquier parte de la pantalla
-    document.addEventListener('click', reproducirRuidito);
-    document.addEventListener('touchstart', reproducirRuidito);
+    // Escuchamos el clic (Laptop) y el toque inicial (Celular)
+    document.addEventListener('click', iniciarAudio);
+    document.addEventListener('touchstart', iniciarAudio, { passive: false });
 
-    // AQUÍ CONTINÚA TU CÓDIGO PARA QUITAR EL SPLASH (setTimeout, etc.)
-    // No borres la lógica que hace que el splash desaparezca.
-
+    // Aquí sigue tu lógica de cerrar el splash tras 2.5 segundos...
+   
     setTimeout(function() {
         const splash = document.getElementById('splash-screen');
         if(splash){
@@ -1846,7 +1846,7 @@ window.onload = function() {
             setTimeout(() => splash.style.display = 'none', 1000);
         }
     }, 3500); 
-};
+    };
         </script>
     </body>
     </html>
