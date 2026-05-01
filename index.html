@@ -109,8 +109,8 @@
     <div class="text-center">
         <img src="NuevoLogo.png" class="w-32 h-32 object-contain animate-pulse">
 
-        <audio id="ruiditoSplash" src="Splash_Sound.mp3" preload="auto"></audio>
-        <audio id="audioSplash" src="audios/intro.mp3" preload="auto" muted playsinline></audio>
+      
+        <audio id="audioSplash" src="SplashScreen.mp3" preload="auto"></audio>
         <audio id="audioAcierto" src="acierto.mp3" preload="auto"></audio>
         <audio id="audioError" src="error.mp3" preload="auto"></audio>
         
@@ -119,7 +119,7 @@
 </div>
     <header class="py-6 px-6 max-w-md mx-auto">
             <div class="flex flex-col items-center justify-center text-center -space-y-1">
-                <img src="NuevoLogo.png" class="w-18 h-18 object-contain opacity-95" onerror="this.style.display='none'">
+                <img src="NuevoLogo.png" class="w-16.1 h-16.1 object-contain opacity-95" onerror="this.style.display='none'">
                 
                 <div class="text-center">
                     <h1 class="text-5xl font-serif font-black italic tracking-tight text-zinc-900 leading-none ">365 Notas</h1>
@@ -1818,21 +1818,25 @@
                 document.body.classList.remove('modal-active');
             }
 
-            // Función para quitar la pantalla de bienvenida después de 2.5 segundos
-    window.onload = function() {
+ window.onload = function() {
+    // 1. Referencia única al audio (usaremos audioSplash como estándar)
     const sonido = document.getElementById('audioSplash');
+    
     if (sonido) {
-        sonido.muted = false;
-        sonido.play().catch(error => {
-            console.log("Esperando toque del usuario para sonar");
-            document.body.addEventListener('click', () => {
-                sonido.muted = false;
+        // Intentar reproducción automática (funcionará si el usuario interactuó antes)
+        sonido.play().catch(() => {
+            // Si el navegador bloquea, esperamos al primer clic en cualquier parte
+            const activarAudio = () => {
                 sonido.play();
-            }, { once: true });
+                document.removeEventListener('click', activarAudio);
+                document.removeEventListener('touchstart', activarAudio);
+            };
+            document.addEventListener('click', activarAudio);
+            document.addEventListener('touchstart', activarAudio); // Crucial para celulares
         });
     }
 
-    document.getElementById('ruiditoSplash').play().catch(e => console.log("Esperando interacción"));
+    // El resto de tu función (el setTimeout para quitar el splash) se mantiene igual abajo
 
     setTimeout(function() {
         const splash = document.getElementById('splash-screen');
