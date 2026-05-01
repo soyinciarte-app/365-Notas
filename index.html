@@ -1819,25 +1819,25 @@
                 document.body.classList.remove('modal-active');
             }
 
-        window.onload = function() {
-            // 1. Referencia única al audio (usaremos audioSplash como estándar)
-            const sonido = document.getElementById('audioSplash');
-            
-            if (sonido) {
-                // Intentar reproducción automática (funcionará si el usuario interactuó antes)
-                sonido.play().catch(() => {
-                    // Si el navegador bloquea, esperamos al primer clic en cualquier parte
-                    const activarAudio = () => {
-                        sonido.play();
-                        document.removeEventListener('click', activarAudio);
-                        document.removeEventListener('touchstart', activarAudio);
-                    };
-                    document.addEventListener('click', activarAudio);
-                    document.addEventListener('touchstart', activarAudio); // Crucial para celulares
-                });
-            }
+window.onload = function() {
+    const sonido = document.getElementById('audioSplash');
 
-    // El resto de tu función (el setTimeout para quitar el splash) se mantiene igual abajo
+    // Función que ejecutará el sonido
+    const reproducirRuidito = () => {
+        if (sonido) {
+            sonido.play().catch(e => console.log("Audio bloqueado aún"));
+            // Una vez que suena, eliminamos los escuchadores para no repetir el ruidito
+            document.removeEventListener('click', reproducirRuidito);
+            document.removeEventListener('touchstart', reproducirRuidito);
+        }
+    };
+
+    // Escuchamos el PRIMER toque del usuario en cualquier parte de la pantalla
+    document.addEventListener('click', reproducirRuidito);
+    document.addEventListener('touchstart', reproducirRuidito);
+
+    // AQUÍ CONTINÚA TU CÓDIGO PARA QUITAR EL SPLASH (setTimeout, etc.)
+    // No borres la lógica que hace que el splash desaparezca.
 
     setTimeout(function() {
         const splash = document.getElementById('splash-screen');
