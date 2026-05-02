@@ -107,19 +107,17 @@
     <body class="antialiased">
         <div id="splash-screen" class="fixed inset-0 z-[100] bg-[#f2f0e4] flex items-center justify-center transition-opacity duration-1000">
     <div class="text-center">
-        <img src="logo.png" class="w-32 h-32 object-contain animate-pulse">
+        <img src="NuevoLogo.png" class="w-32 h-32 object-contain animate-pulse">
+        <audio id="audioSplash" src="SplashScreen.mp3" preload="auto"></audio>
 
-        <audio id="ruiditoSplash" src="Splash_Sound.mp3" preload="auto"></audio>
-        <audio id="audioSplash" src="audios/intro.mp3" preload="auto" muted playsinline></audio>
         <audio id="audioAcierto" src="acierto.mp3" preload="auto"></audio>
         <audio id="audioError" src="error.mp3" preload="auto"></audio>
         
-
     </div>
 </div>
     <header class="py-6 px-6 max-w-md mx-auto">
             <div class="flex flex-col items-center justify-center text-center -space-y-1">
-                <img src="logo.png" class="w-18 h-18 object-contain opacity-95" onerror="this.style.display='none'">
+                <img src="NuevoLogo.png" class="h-16.1 w-16.1 object-contain opacity-95" onerror="this.style.display='none'">
                 
                 <div class="text-center">
                     <h1 class="text-5xl font-serif font-black italic tracking-tight text-zinc-900 leading-none ">365 Notas</h1>
@@ -1691,6 +1689,7 @@
     </div>
 </div>
 
+        <div class="linea-separadora"></div>
 
 <div class="px-6 max-w-md mx-auto mb-4">
             <div id="contenedorPublicidad" class="w-full border-2 border-dashed border-zinc-300 rounded-xl bg-zinc-50 flex items-center justify-center p-4 text-center">
@@ -1699,8 +1698,15 @@
                     <p class="text-xs">Tu empresa puede anunciar aquí. Contáctanos.</p>
                 </div>
             </div>
-            
-                <div class="flex justify-between items-center pt-10 border-t border-zinc-200 mt-10">
+
+
+                <!-- Mira el final de esta línea: le agregamos 'relative' -->
+<div class="flex justify-between items-center pt-10 border-t border-zinc-200 mt-10 relative">
+    
+    <div class="absolute top-2 left-1/2 transform -translate-x-1/2">
+        <img src="NuevoLogo.png" class="h-10 object-contain opacity-100">
+    </div>
+    
     <button onclick="cerrarDetalle()" class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest hover:text-zinc-900 transition-colors">
         ← Atrás
     </button>
@@ -1823,31 +1829,41 @@
                 document.body.classList.remove('modal-active');
             }
 
-            // Función para quitar la pantalla de bienvenida después de 2.5 segundos
-    window.onload = function() {
-    const sonido = document.getElementById('audioSplash');
-    if (sonido) {
-        sonido.muted = false;
-        sonido.play().catch(error => {
-            console.log("Esperando toque del usuario para sonar");
-            document.body.addEventListener('click', () => {
-                sonido.muted = false;
-                sonido.play();
-            }, { once: true });
-        });
-    }
+ // Función para quitar la pantalla de bienvenida y activar audio
+            window.onload = function() {
+                const sonido = document.getElementById('audioSplash');
+                const splash = document.getElementById('splash-screen');
 
-    document.getElementById('ruiditoSplash').play().catch(e => console.log("Esperando interacción"));
+                // 1. Lógica del Audio (Desbloqueador)
+                const iniciarAudio = () => {
+                    if (sonido) {
+                        sonido.play().then(() => {
+                            console.log("Audio reproducido con éxito");
+                            document.removeEventListener('click', iniciarAudio);
+                            document.removeEventListener('touchstart', iniciarAudio);
+                        }).catch(e => {
+                            console.log("Esperando interacción del usuario para sonar");
+                        });
+                    }
+                };
 
-    setTimeout(function() {
-        const splash = document.getElementById('splash-screen');
-        if(splash){
-            splash.style.opacity = '0'; 
-            setTimeout(() => splash.style.display = 'none', 1000);
-        }
-    }, 3500); 
-};
+                // Escuchamos el primer toque para el audio
+                document.addEventListener('click', iniciarAudio);
+                document.addEventListener('touchstart', iniciarAudio, { passive: true });
+
+                // 2. Lógica de Salida del Splash (Única y limpia)
+                setTimeout(() => {
+                    if (splash) {
+                        console.log("Saliendo del splash...");
+                        splash.style.opacity = '0';
+                        setTimeout(() => {
+                            splash.style.display = 'none';
+                        }, 1000);
+                    } else {
+                        console.log("Error: No se encontró el elemento splash-screen");
+                    }
+                }, 2500); 
+            }; // Aquí termina la función correctamente
         </script>
     </body>
-    </html>
-    
+</html>
