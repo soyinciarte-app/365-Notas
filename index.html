@@ -107,10 +107,10 @@
     <body class="antialiased">
         <div id="splash-screen" class="fixed inset-0 z-[100] bg-[#f2f0e4] flex items-center justify-center transition-opacity duration-1000">
     <div class="text-center">
-        <img src="NuevoLogo.png" class="w-32 h-32 object-contain animate-pulse">
+        <img src="logo.png" class="w-32 h-32 object-contain animate-pulse">
 
-      
-        <audio id="audioSplash" src="SplashScreen.mp3" preload="auto"></audio>
+        <audio id="ruiditoSplash" src="Splash_Sound.mp3" preload="auto"></audio>
+        <audio id="audioSplash" src="audios/intro.mp3" preload="auto" muted playsinline></audio>
         <audio id="audioAcierto" src="acierto.mp3" preload="auto"></audio>
         <audio id="audioError" src="error.mp3" preload="auto"></audio>
         
@@ -119,7 +119,7 @@
 </div>
     <header class="py-6 px-6 max-w-md mx-auto">
             <div class="flex flex-col items-center justify-center text-center -space-y-1">
-                <img src="NuevoLogo.png" class="w-16.1 h-16.1 object-contain opacity-95" onerror="this.style.display='none'">
+                <img src="logo.png" class="w-18 h-18 object-contain opacity-95" onerror="this.style.display='none'">
                 
                 <div class="text-center">
                     <h1 class="text-5xl font-serif font-black italic tracking-tight text-zinc-900 leading-none ">365 Notas</h1>
@@ -151,6 +151,18 @@
 
 
         <main id="gridTarjetas" class="max-w-md mx-auto px-4 grid grid-cols-2 gap-x-4 gap-y-8 pb-32">
+            
+            <div class="tarjeta-musica cursor-pointer group" onclick='abrirDetalle({"Ad_Imagen": NaN, "Ad_Link": NaN, "Analisis_Sustancia": "Quinta canci\u00f3n lanzada como sencillo de \u0027Thriller\u0027 (1982). Escrita por Steve Porcaro (Toto) y John Bettis. Destaca por su producci\u00f3n et\u00e9rea basada en sintetizadores anal\u00f3gicos (Yamaha CS-80) y una armon\u00eda sofisticada. Jackson utiliza un registro vocal contenido que enfatiza la vulnerabilidad l\u00edrica.", "Archivo_Audio": "Audio_Dia_122", "Artista_Referencia": NaN, "Etiqueta_Regalo": NaN, "Fecha_Publicacion": "02/08/2026", "Genero_Tag": "R\u0026B / Soul Introspectivo / Synth-Pop", "ID_Dia": 122, "Image_Cover": "dia122.png", "Link_Audicion": "https://youtu.be/ElN_4vUvTPs?si=4pelAg2W3LyunEny", "Link_Regalo": NaN, "Obra_Artista": "Michael Jackson - Human Nature", "Opcion_A": "A) Journey.", "Opcion_B": "B) Toto.", "Opcion_C": "C) Steely Dan.", "Pais_Origen": "Estados Unidos de Am\u00e9rica", "Pista_Maestro": "La canci\u00f3n fue la \u00faltima en entrar a \u0027Thriller\u0027. Quincy Jones la descubri\u00f3 por accidente al final de un cassette que Porcaro le hab\u00eda enviado con otros demos.", "Pregunta_Trivia": "\u00bfQu\u00e9 famosa banda de rock/jazz-fusi\u00f3n compuso y grab\u00f3 la instrumentaci\u00f3n de \"Human Nature\"?", "Respuesta_Correcta": "B) Toto.", "Tres_Alternativas": "A) Journey. B) Toto. C) Steely Dan.", "URL_Media": NaN, "ruta_audio": "audios\\Audio_Dia_122.mp3", "ruta_img": "portadas\\dia122.png"})'>
+                <div class="aspect-square rounded-[1.2rem] overflow-hidden border border-zinc-200 bg-zinc-100 mb-3">
+                    <img src="portadas\dia122.png" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                </div>
+                
+                <div class="px-1 text-left">
+                    <p class="text-[11px] font-semibold text-zinc-900 uppercase tracking-tight mb-1">Día 122</p>
+                    <h2 class="text-[14px] font-serif font-black italic text-zinc-900 leading-tight line-clamp-2"> Michael Jackson - Human Nature </h2>
+                </div>
+            </div>
             
             <div class="tarjeta-musica cursor-pointer group" onclick='abrirDetalle({"Ad_Imagen": NaN, "Ad_Link": NaN, "Analisis_Sustancia": "Compuesta en 1965 y grabada en \u0027Kamikaze\u0027 (1982). Representa la precocidad creativa de Spinetta. Estructuralmente es una zamba con armon\u00eda de jazz (tensiones de 7ma y 9na). La l\u00edrica aborda temas metaf\u00edsicos sobre la creaci\u00f3n art\u00edstica y la trascendencia del esp\u00edritu sobre la materia (el barro).", "Archivo_Audio": "Audio_Dia_121", "Artista_Referencia": NaN, "Etiqueta_Regalo": NaN, "Fecha_Publicacion": "01/08/2026", "Genero_Tag": "Zamba / Rock Argentino / Trova", "ID_Dia": 121, "Image_Cover": "dia121.jpg", "Link_Audicion": "https://youtu.be/W47hOuQjDag?si=nUTb9TZsUUPCqV3O", "Link_Regalo": NaN, "Obra_Artista": "Luis Alberto Spinetta - Barro tal vez", "Opcion_A": "A) 15 a\u00f1os.", "Opcion_B": "B) 25 a\u00f1os.", "Opcion_C": "C) 32 a\u00f1os.", "Pais_Origen": "Argentina", "Pista_Maestro": "La canci\u00f3n utiliza un rasguido de zamba ralentizado que permite una interpretaci\u00f3n vocal m\u00e1s el\u00e1stica y expresiva, alej\u00e1ndose del folklore de pe\u00f1a tradicional.", "Pregunta_Trivia": "\u00bfA qu\u00e9 edad compuso Luis Alberto Spinetta el tema \"Barro tal vez\"?", "Respuesta_Correcta": "A) 15 a\u00f1os.", "Tres_Alternativas": "A) 15 a\u00f1os. B) 25 a\u00f1os. C) 32 a\u00f1os.", "URL_Media": NaN, "ruta_audio": "audios\\Audio_Dia_121.mp3", "ruta_img": "portadas\\dia121.jpg"})'>
                 <div class="aspect-square rounded-[1.2rem] overflow-hidden border border-zinc-200 bg-zinc-100 mb-3">
@@ -1679,12 +1691,6 @@
     </div>
 </div>
 
-    <div class="linea-separadora"></div>
-
-       <div class="flex justify-center mb-8">
-    <img src="NuevoLogo.png" class="h-12 object-contain opacity-80">
-    </div>
-
 
 <div class="px-6 max-w-md mx-auto mb-4">
             <div id="contenedorPublicidad" class="w-full border-2 border-dashed border-zinc-300 rounded-xl bg-zinc-50 flex items-center justify-center p-4 text-center">
@@ -1698,8 +1704,6 @@
     <button onclick="cerrarDetalle()" class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest hover:text-zinc-900 transition-colors">
         ← Atrás
     </button>
-
- 
     <button onclick="document.getElementById('detalleModal').scrollTo({top: 0, behavior: 'smooth'})" class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest hover:text-zinc-900 transition-colors">
         ↑ Volver arriba
     </button>
@@ -1819,26 +1823,22 @@
                 document.body.classList.remove('modal-active');
             }
 
-window.onload = function() {
+            // Función para quitar la pantalla de bienvenida después de 2.5 segundos
+    window.onload = function() {
     const sonido = document.getElementById('audioSplash');
+    if (sonido) {
+        sonido.muted = false;
+        sonido.play().catch(error => {
+            console.log("Esperando toque del usuario para sonar");
+            document.body.addEventListener('click', () => {
+                sonido.muted = false;
+                sonido.play();
+            }, { once: true });
+        });
+    }
 
-    const iniciarAudio = () => {
-        if (sonido) {
-            // En móviles, esto 'despierta' el motor de audio
-            sonido.play().then(() => {
-                // Una vez que suena, limpiamos todos los escuchadores
-                document.removeEventListener('click', iniciarAudio);
-                document.removeEventListener('touchstart', iniciarAudio);
-            }).catch(e => console.log("Permiso pendiente..."));
-        }
-    };
+    document.getElementById('ruiditoSplash').play().catch(e => console.log("Esperando interacción"));
 
-    // Escuchamos el clic (Laptop) y el toque inicial (Celular)
-    document.addEventListener('click', iniciarAudio);
-    document.addEventListener('touchstart', iniciarAudio, { passive: false });
-
-    // Aquí sigue tu lógica de cerrar el splash tras 2.5 segundos...
-   
     setTimeout(function() {
         const splash = document.getElementById('splash-screen');
         if(splash){
@@ -1846,7 +1846,7 @@ window.onload = function() {
             setTimeout(() => splash.style.display = 'none', 1000);
         }
     }, 3500); 
-    };
+};
         </script>
     </body>
     </html>
