@@ -3,6 +3,18 @@ from jinja2 import Template
 import os
 import json
 
+# Variable blindada para Google Analytics
+codigo_analytics = """
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-334S1RVPFX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+
+  gtag('config', 'G-334S1RVPFX');
+</script>
+"""
+
 # --- 1. CONFIGURACIÓN ---
 archivo_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQSkICayf946zUmX2EpcUFtS9MnYgfMAZmNBLwSRMIy6u2X22k3mV8qGLMkjEwJcN0vI4JpbxsZIxf5/pub?gid=0&single=true&output=csv' 
 ruta_portadas = 'portadas'
@@ -40,6 +52,7 @@ try:
     <!DOCTYPE html>
     <html lang="es">
     <head>
+       
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         
@@ -135,34 +148,29 @@ try:
     <body class="antialiased">
         <div id="splash-screen" class="fixed inset-0 z-[100] bg-[#f2f0e4] flex items-center justify-center transition-opacity duration-1000">
     <div class="text-center">
-        <img src="{{ logo }}" class="w-32 h-32 object-contain animate-pulse">
+        <img src="NuevoLogo.png" class="w-32 h-32 object-contain animate-pulse">
+        <audio id="audioSplash" src="SplashScreen.mp3" preload="auto"></audio>
 
-        <audio id="ruiditoSplash" src="Splash_Sound.mp3" preload="auto"></audio>
-        <audio id="audioSplash" src="audios/intro.mp3" preload="auto" muted playsinline></audio>
         <audio id="audioAcierto" src="acierto.mp3" preload="auto"></audio>
         <audio id="audioError" src="error.mp3" preload="auto"></audio>
         
-
     </div>
 </div>
     <header class="py-6 px-6 max-w-md mx-auto">
-            <div class="flex items-center space-x-4">
-                <img src="{{ logo }}" class="w-21 h-21 object-contain opacity-95" onerror="this.style.display='none'">
+            <div class="flex flex-col items-center justify-center text-center -space-y-1">
+                <img src="NuevoLogo.png" class="h-16.1 w-16.1 object-contain opacity-95" onerror="this.style.display='none'">
                 
-                <div class="text-left">
-                    <h1 class="text-3xl font-serif font-black italic tracking-tight text-zinc-900 leading-none">365 Notas</h1>
-                    <p class="text-[11px] font-semibold text-zinc-900 uppercase tracking-tight mt-1">@SoyInciarte</p>
+                <div class="text-center">
+                    <h1 class="text-5xl font-serif font-black italic tracking-tight text-zinc-900 leading-none ">365 Notas</h1>
+                    <p class="text-[17px] font-light text-zinc-600 tracking-tighter mt-2">Derechos Reservados - @SoyInciarte</p>
                 </div>
             </div>
 
-            <div class="px-6 max-w-md mx-auto mb-4">
-            <div id="contenedorPublicidad" class="w-full border-2 border-dashed border-zinc-300 rounded-xl bg-zinc-50 flex items-center justify-center p-4 text-center">
-                <div class="text-zinc-500 font-medium">
-                    <p class="text-sm uppercase tracking-wider mb-1">Espacio Publicitario Disponible</p>
-                    <p class="text-xs">Tu empresa puede anunciar aquí. Contáctanos.</p>
+            <div class="px-6 max-w-md mx-auto mt-9 mb-4">
+                <div id="contenedorPublicidad" class="w-full overflow-hidden rounded-xl bg-zinc-50 flex items-center justify-center">
+                    <img src="Banner_Lexicon.jpg" alt="Publicidad Lexicón C.A." class="w-full h-auto object-cover block">
                 </div>
             </div>
-        </div>
 
             <div class="border-t border-zinc-300 my-8 opacity-50"></div>
 
@@ -189,18 +197,20 @@ try:
                 <div class="px-1 text-left">
                     <p class="text-[11px] font-semibold text-zinc-900 uppercase tracking-tight mb-1">Día {{ row.ID_Dia }}</p>
                     <h2 class="text-[14px] font-serif font-black italic text-zinc-900 leading-tight line-clamp-2"> {{ row.Obra_Artista }} </h2>
+                
+                    <!-- LÍNEA INYECTADA: -->
+                    <p class="text-[9px] font-medium text-zinc-500 uppercase tracking-wider mt-1"> {{ row.Genero_Tag }} </p>
+
                 </div>
             </div>
             {% endfor %}
         </main>
 
          <div class="px-6 max-w-md mx-auto mb-4">
-            <div id="contenedorPublicidad" class="w-full border-2 border-dashed border-zinc-300 rounded-xl bg-zinc-50 flex items-center justify-center p-4 text-center">
-                <div class="text-zinc-500 font-medium">
-                    <p class="text-sm uppercase tracking-wider mb-1">SoyInciarte@gmail.com</p>
-                    <p class="text-xs">Para comentarios y feedback.</p>
-                </div>
-            </div>   
+            <div id="contenedorPublicidadModal" class="w-full overflow-hidden rounded-xl bg-zinc-50 flex items-center justify-center">
+                <img src="Banner_Lexicon.jpg" alt="Publicidad Lexicón C.A." class="w-full h-auto object-cover block">
+            </div>
+        </div> 
 
         <div class="text-center pb-20">
             <a href="#" class="text-[11px] font-semibold text-zinc-400 uppercase tracking-widest hover:text-zinc-900 transition-colors">
@@ -218,6 +228,10 @@ try:
 
                 <div class="space-y-8">
                     <h3 id="modalTitulo" class="text-3xl md:text-4xl font-serif font-bold text-zinc-900 italic leading-tight text-center"></h3>
+                    
+                    <!-- INSERCIÓN QUIRÚRGICA AQUÍ -->
+                    <p id="modalGenero" class="text-[12px] text-zinc-500 uppercase tracking-[0.2em] text-center -mt-6 mb-2 font-medium"></p>
+                    
                     <div class="linea-separadora"></div>
                     <p id="modalAnalisis" class="text-zinc-800 text-lg leading-relaxed text-justify px-2 font-light italic"></p>
                 </div>
@@ -265,6 +279,7 @@ try:
     </div>
 </div>
 
+        <div class="linea-separadora"></div>
 
 <div class="px-6 max-w-md mx-auto mb-4">
             <div id="contenedorPublicidad" class="w-full border-2 border-dashed border-zinc-300 rounded-xl bg-zinc-50 flex items-center justify-center p-4 text-center">
@@ -274,7 +289,14 @@ try:
                 </div>
             </div>
 
-                <div class="flex justify-between items-center pt-10 border-t border-zinc-200 mt-10">
+
+                <!-- Mira el final de esta línea: le agregamos 'relative' -->
+<div class="flex justify-between items-center pt-10 border-t border-zinc-200 mt-10 relative">
+    
+    <div class="absolute top-2 left-1/2 transform -translate-x-1/2">
+        <img src="NuevoLogo.png" class="h-10 object-contain opacity-100">
+    </div>
+    
     <button onclick="cerrarDetalle()" class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest hover:text-zinc-900 transition-colors">
         ← Atrás
     </button>
@@ -301,6 +323,10 @@ try:
             function abrirDetalle(data) {
                 document.getElementById('modalImg').src = data.ruta_img || '';
                 document.getElementById('modalTitulo').innerText = data.Obra_Artista;
+
+                // INSERCIÓN QUIRÚRGICA:
+                document.getElementById('modalGenero').innerText = data.Genero_Tag || "";
+
                 document.getElementById('modalAnalisis').innerText = data.Analisis_Sustancia || "";
                 document.getElementById('triviaPregunta').innerText = data.Pregunta_Trivia || "";
                 document.getElementById('modalPista').innerText = data.Pista_Maestro || "";
@@ -370,7 +396,7 @@ try:
                 if (respuestaCorrectaGlobal.startsWith(letra)) {
                     botones.forEach(b => b.disabled = true);
                     boton.classList.add('btn-correct');
-                    mensaje.innerText = "¡Excelente oído!";
+                    mensaje.innerText = "¡Correcto!✨";
                     mensaje.className = "block py-4 px-6 rounded-2xl text-zinc-900 bg-white/80 font-bold text-center border-2 border-zinc-900";
                     pista.classList.add('hidden');
                     document.getElementById('audioAcierto').play();
@@ -383,7 +409,7 @@ try:
 
                 } else {
                     boton.classList.add('btn-incorrect');
-                    mensaje.innerText = "Inténtalo de nuevo...";
+                    mensaje.innerText = "Casi. Lee la Pista-Maestro";
                     mensaje.className = "block py-4 px-6 rounded-2xl text-zinc-900 bg-white/80 font-bold text-center border-2 border-zinc-900";
                     pista.classList.remove('hidden');
                     document.getElementById('audioError').play();
@@ -397,39 +423,57 @@ try:
                 document.body.classList.remove('modal-active');
             }
 
-            // Función para quitar la pantalla de bienvenida después de 2.5 segundos
-    window.onload = function() {
-    const sonido = document.getElementById('audioSplash');
-    if (sonido) {
-        sonido.muted = false;
-        sonido.play().catch(error => {
-            console.log("Esperando toque del usuario para sonar");
-            document.body.addEventListener('click', () => {
-                sonido.muted = false;
-                sonido.play();
-            }, { once: true });
-        });
-    }
+ // Función para quitar la pantalla de bienvenida y activar audio
+            window.onload = function() {
+                const sonido = document.getElementById('audioSplash');
+                const splash = document.getElementById('splash-screen');
 
-    document.getElementById('ruiditoSplash').play().catch(e => console.log("Esperando interacción"));
+                // 1. Lógica del Audio (Desbloqueador)
+                const iniciarAudio = () => {
+                    if (sonido) {
+                        sonido.play().then(() => {
+                            console.log("Audio reproducido con éxito");
+                            document.removeEventListener('click', iniciarAudio);
+                            document.removeEventListener('touchstart', iniciarAudio);
+                        }).catch(e => {
+                            console.log("Esperando interacción del usuario para sonar");
+                        });
+                    }
+                };
 
-    setTimeout(function() {
-        const splash = document.getElementById('splash-screen');
-        if(splash){
-            splash.style.opacity = '0'; 
-            setTimeout(() => splash.style.display = 'none', 1000);
-        }
-    }, 3500); 
-};
+                // Escuchamos el primer toque para el audio
+                document.addEventListener('click', iniciarAudio);
+                document.addEventListener('touchstart', iniciarAudio, { passive: true });
+
+                // 2. Lógica de Salida del Splash (Única y limpia)
+                setTimeout(() => {
+                    if (splash) {
+                        console.log("Saliendo del splash...");
+                        splash.style.opacity = '0';
+                        setTimeout(() => {
+                            splash.style.display = 'none';
+                        }, 1000);
+                    } else {
+                        console.log("Error: No se encontró el elemento splash-screen");
+                    }
+                }, 2500); 
+            }; // Aquí termina la función correctamente
         </script>
     </body>
-    </html>
-    """
+</html>
+"""
 
+    # 1. Generamos el contenido (aquí mantenemos tu logo y tus datos intactos)
+    html_final = Template(html_template).render(lista_datos=datos_json, logo=archivo_logo)
+
+    # 2. Inyectamos Analytics (usando la variable de la línea 14)
+    html_final = html_final.replace('<head>', '<head>' + codigo_analytics)
+
+    # 3. Guardamos el archivo final ya con todo incluido
     with open("index.html", "w", encoding="utf-8") as f:
-        f.write(Template(html_template).render(lista_datos=datos_json, logo=archivo_logo))
-    
-    print(f"--- ¡Versión Minimalista Vocabulary Lista! ---")
+        f.write(html_final)  
+
+        print(f"--- ¡Versión Minimalista Vocabulary Lista! ---")
 
 except Exception as e:
     print(f"Error crítico: {e}")
